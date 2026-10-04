@@ -205,7 +205,11 @@ function saveEdit(){let id=Number(document.getElementById("editId").value),t=tas
 function clearCompleted(){tasks=tasks.filter(t=>!t.completed);saveTasks();renderTasks();showToast("Completed tasks cleared!")}
 function deleteAllTasks(){if(tasks.length&&confirm("Delete all tasks?")){tasks=[];saveTasks();renderTasks();showToast("All tasks deleted!")}}
 function updateStats(){let total=tasks.length,completed=tasks.filter(t=>t.completed).length,active=total-completed,rate=total?Math.round(completed/total*100):0;document.getElementById("totalTasks").textContent=total;document.getElementById("activeTasks").textContent=active;document.getElementById("completedTasks").textContent=completed;document.getElementById("completionRate").textContent=rate+"%";document.getElementById("progressText").textContent=rate+"%";document.getElementById("progressBar").style.width=rate+"%"}
-function escapeHTML(str){return str.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function escapeHTML(str){
+return str.replace(/[&<>"']/g,function(m){
+return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];
+});
+  }
 function toggleTheme(){document.body.classList.toggle("light");localStorage.setItem("taskFlowTheme",document.body.classList.contains("light")?"light":"dark")}
 if(localStorage.getItem("taskFlowTheme")==="light")document.body.classList.add("light");
 document.getElementById("taskInput").addEventListener("keydown",e=>{if(e.key==="Enter")addTask()});
