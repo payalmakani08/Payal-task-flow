@@ -439,19 +439,33 @@ body.dark .stat-card,
 body.dark .task-item {
     background: #24213c;
     color: #f0edff;
+    border-color: #403958;
 }
 
 body.dark .form-control,
 body.dark .form-select,
 body.dark .search-box,
 body.dark .action-btn {
-    background: #302c4a;
-    color: white;
-    border-color: #48415f;
+    background-color: #302c4a;
+    color: #ffffff;
+    border-color: #51486e;
+}
+
+body.dark .form-control::placeholder,
+body.dark .search-box input::placeholder {
+    color: #c0bad6;
 }
 
 body.dark .search-box input {
-    color: white;
+    color: #ffffff;
+}
+
+body.dark .form-label,
+body.dark .section-heading h3,
+body.dark .task-title,
+body.dark .progress-panel h5,
+body.dark .empty-state h5 {
+    color: #f0edff;
 }
 
 body.dark .task-description,
@@ -461,19 +475,60 @@ body.dark footer {
     color: #c0bad6;
 }
 
-body.dark .task-item.is-completed .task-title {
-    color: #aaa3c4;
+body.dark .list-footer {
+    border-color: #403958;
 }
 
-body.dark .list-footer {
-    border-color: #48415f;
+body.dark .custom-progress {
+    background: #403958;
+}
+
+body.dark .heading-icon,
+body.dark .task-counter {
+    background: #383052;
+    color: #d0c2ff;
+}
+
+body.dark .priority-high {
+    background: #512b3b;
+    color: #ffb3bd;
+}
+
+body.dark .priority-medium {
+    background: #4d3b26;
+    color: #ffd08b;
+}
+
+body.dark .priority-low,
+body.dark .status-badge {
+    background: #203e35;
+    color: #91e4b6;
+}
+
+body.dark .due-badge {
+    background: #343052;
+    color: #d0caff;
+}
+
+body.dark .empty-icon {
+    color: #d0c2ff;
+    background: #383052;
 }
 
 body.dark .cancel-btn {
-    color: white;
     background: #302c4a;
-    border-color: #48415f;
+    color: #ffffff;
+    border-color: #51486e;
 }
+
+body.dark .action-btn:hover {
+    background: #42385f;
+}
+
+body.dark .clear-btn {
+    color: #ff9ca9;
+}
+    
 
 /* Mobile layout */
 
