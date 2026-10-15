@@ -326,19 +326,24 @@ function showMessage(message) {
     }, 2500);
 }
 
-// Dark and light mode
+/* Dark and light mode */
+
 const themeButton = document.getElementById("themeButton");
 const themeIcon = document.getElementById("themeIcon");
 
 function setTheme(dark) {
-    document.body.classList.toggle("dark", dark);
-
-    themeIcon.className = dark
-        ? "bi bi-sun-fill"
-        : "bi bi-moon-stars-fill";
+    if (dark) {
+        document.body.classList.add("dark");
+        themeIcon.className = "bi bi-sun-fill";
+    } else {
+        document.body.classList.remove("dark");
+        themeIcon.className = "bi bi-moon-stars-fill";
+    }
 }
 
-setTheme(localStorage.getItem("payalTheme") === "dark");
+let savedTheme = localStorage.getItem("payalTheme");
+
+setTheme(savedTheme === "dark");
 
 themeButton.addEventListener("click", function () {
     const dark = !document.body.classList.contains("dark");
@@ -346,6 +351,7 @@ themeButton.addEventListener("click", function () {
     setTheme(dark);
     localStorage.setItem("payalTheme", dark ? "dark" : "light");
 });
+
 
 // Load saved tasks when the page opens
 displayTasks();
