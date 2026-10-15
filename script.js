@@ -183,9 +183,12 @@ function displayTasks() {
             (status === "Pending" && !task.completed) ||
             (status === "Completed" && task.completed);
 
+        
         const matchesPriority =
-            priority === "All" || task.priority === priority;
-
+            priority === "All" ||
+            String(task.priority || "Medium").trim().toLowerCase() ===
+            priority.trim().toLowerCase();
+        
         return matchesSearch && matchesStatus && matchesPriority;
     });
 
