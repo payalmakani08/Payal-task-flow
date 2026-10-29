@@ -1,397 +1,96 @@
-
-// Payal Task Flow - JavaScript
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Get HTML elements
-
     const taskForm = document.getElementById("taskForm");
-    const taskTitle = document.getElementById("taskTitle");
-    const taskDate = document.getElementById("taskDate");
-    const taskPriority = document.getElementById("taskPriority");
-
+    const taskInput = document.getElementById("taskInput");
     const taskList = document.getElementById("taskList");
-    const taskFilter = document.getElementById("taskFilter");
-    const emptyMessage = document.getElementById("emptyMessage");
 
-    const totalTasks = document.getElementById("totalTasks");
-    const pendingTasks = document.getElementById("pendingTasks");
-    const completedTasks = document.getElementById("completedTasks");
-
-
-    // Check whether HTML elements exist
-
-    if (
-        !taskForm ||
-        !taskTitle ||
-        !taskDate ||
-        !taskPriority ||
-        !taskList ||
-        !taskFilter
-    ) {
-        console.error("Task Flow: Some HTML elements are missing.");
-        return;
-    }
-
-
-    // Load saved tasks safely
-
-    let tasks = [];
-
-    try {
-        tasks = JSON.parse(
-            localStorage.getItem("payalTasks") || "[]"
-        );
-
-        if (!Array.isArray(tasks)) {
-            tasks = [];
-        }
-
-    } catch (error) {
-        console.error("Unable to load saved tasks:", error);
-        tasks = [];
-    }
-
-
-    // Save tasks
-
-    function saveTasks() {
-        try {
-            localStorage.setItem(
-                "payalTasks",
-                JSON.stringify(tasks)
-            );
-
-            return true;
-
-        } catch (error) {
-
-            alert(
-                "Unable to save tasks. Please check your browser storage."
-            );
-
-            console.error(error);
-
-            return false;
-        }
-    }
-
-
-    // Update dashboard
-
-    function updateDashboard() {
-
-        const completed = tasks.filter(
-            task => task.completed
-        ).length;
-
-        const pending = tasks.length - completed;
-
-        if (totalTasks) {
-            totalTasks.textContent = tasks.length;
-        }
-
-        if (pendingTasks) {
-            pendingTasks.textContent = pending;
-        }
-
-        if (completedTasks) {
-            completedTasks.textContent = completed;
-        }
-    }
-
+    // Load saved tasks
+    let tasks = JSON.parse(localStorage.getItem("payalTasks")) || [];
 
     // Display tasks
-
-    function renderTasks() {
+    function displayTasks() {
 
         taskList.innerHTML = "";
 
-        const filterValue = taskFilter.value;
+        tasks.forEach(function (task, index) {
 
-        let filteredTasks = tasks.filter(function (task) {
+            const taskCard = document.createElement("div");
+            taskCard.className = "card mb-3 p-3";
 
-            if (filterValue === "pending") {
-                return !task.completed;
-            }
+            taskCard.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="${task.completed ? 'text-decoration-line-through' : ''}">
+                        ${task.title}
+                    </span>
 
-            if (filterValue === "completed") {
-                return task.completed;
-            }
+                    <div>
+                        <button class="btn btn-success btn-sm"
+                            onclick="completeTask(${index})">
+                            ${task.completed ? 'Undo' : 'Complete'}
+                        </button>
 
-            return true;
+                        <button class="btn btn-danger btn-sm"
+                            onclick="deleteTask(${index})">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            taskList.appendChild(taskCard);
 
         });
 
-
-        // Sort by due date
-
-        filteredTasks.sort(function (a, b) {
-            return a.date.localeCompare(b.date);
-        });
-
-
-        // Show empty message
-
-        if (emptyMessage) {
-
-            emptyMessage.style.display =
-                filteredTasks.length === 0 ? "block" : "none";
-
-        }
-
-
-        // Create task cards
-
-        filteredTasks.forEach(function (task) {
-
-            const column = document.createElement("div");
-
-            column.className = "col-md-6";
-
-
-            const card = document.createElement("div");
-
-            card.className = "task-card";
-
-
-            if (task.completed) {
-                card.classList.add("completed");
-            }
-
-
-            // Task title
-
-            const heading = document.createElement("h5");
-
-            heading.textContent = task.title;
-
-
-            // Priority
-
-            const priorityBadge = document.createElement("span");
-
-            priorityBadge.className =
-                "priority " + task.priority;
-
-            priorityBadge.textContent =
-                task.priority + " Priority";
-
-
-            // Due date
-
-            const dateText = document.createElement("p");
-
-            dateText.className = "task-date";
-
-            dateText.textContent =
-                "Due date: " + task.date;
-
-
-            // Button container
-
-            const buttonArea = document.createElement("div");
-
-            buttonArea.className = "task-buttons";
-
-
-            // Complete button
-
-            const completeButton =
-                document.createElement("button");
-
-            completeButton.type = "button";
-
-            completeButton.className = task.completed
-                ? "btn btn-sm btn-secondary"
-                : "btn btn-sm btn-success";
-
-            completeButton.textContent = task.completed
-                ? "Undo"
-                : "Complete";
-
-
-            completeButton.addEventListener(
-                "click",
-                function () {
-
-                    task.completed = !task.completed;
-
-                    saveTasks();
-
-                    renderTasks();
-
-                }
-            );
-
-
-            // Delete button
-
-            const deleteButton =
-                document.createElement("button");
-
-            deleteButton.type = "button";
-
-            deleteButton.className =
-                "btn btn-sm btn-outline-danger";
-
-            deleteButton.textContent = "Delete";
-
-
-            deleteButton.addEventListener(
-                "click",
-                function () {
-
-                    if (
-                        !confirm("Are you sure you want to delete this task?")
-                    ) {
-                        return;
-                    }
-
-                    tasks = tasks.filter(function (item) {
-                        return item.id !== task.id;
-                    });
-
-                    saveTasks();
-
-                    renderTasks();
-
-                }
-            );
-
-
-            // Add buttons
-
-            buttonArea.appendChild(completeButton);
-
-            buttonArea.appendChild(deleteButton);
-
-
-            // Add elements to card
-
-            card.appendChild(heading);
-
-            card.appendChild(priorityBadge);
-
-            card.appendChild(dateText);
-
-            card.appendChild(buttonArea);
-
-
-            // Add card to page
-
-            column.appendChild(card);
-
-            taskList.appendChild(column);
-
-        });
-
-
-        // Update dashboard
-
-        updateDashboard();
+        localStorage.setItem("payalTasks", JSON.stringify(tasks));
 
     }
 
-
     // Add task
-
     taskForm.addEventListener("submit", function (event) {
 
         event.preventDefault();
 
+        const taskName = taskInput.value.trim();
 
-        const title = taskTitle.value.trim();
-
-        const date = taskDate.value;
-
-        const priority = taskPriority.value;
-
-
-        // Validate task name
-
-        if (title === "") {
-
-            alert("Please enter a task name.");
-
-            taskTitle.focus();
-
+        if (taskName === "") {
+            alert("Please enter a task!");
             return;
         }
-
-
-        // Validate due date
-
-        if (date === "") {
-
-            alert("Please select a due date.");
-
-            taskDate.focus();
-
-            return;
-        }
-
-
-        // Create task
 
         const newTask = {
-
-            id: Date.now(),
-
-            title: title,
-
-            date: date,
-
-            priority: priority,
-
+            title: taskName,
             completed: false
-
         };
-
-
-        // Add task to array
 
         tasks.push(newTask);
 
+        localStorage.setItem("payalTasks", JSON.stringify(tasks));
 
-        // Save and update display
+        taskInput.value = "";
 
-        saveTasks();
-
-        taskForm.reset();
-
-        renderTasks();
-
-
-        // Show confirmation
-
-        alert("Task added successfully!");
+        displayTasks();
 
     });
 
+    // Complete task
+    window.completeTask = function (index) {
 
-    // Filter tasks
+        tasks[index].completed = !tasks[index].completed;
 
-    taskFilter.addEventListener(
-        "change",
-        renderTasks
-    );
+        displayTasks();
 
+    };
 
-    // Set minimum date to today
+    // Delete task
+    window.deleteTask = function (index) {
 
-    const today = new Date();
+        tasks.splice(index, 1);
 
-    const todayString =
-        today.getFullYear() + "-" +
-        String(today.getMonth() + 1).padStart(2, "0") + "-" +
-        String(today.getDate()).padStart(2, "0");
+        displayTasks();
 
-    taskDate.min = todayString;
+    };
 
-
-    // Show saved tasks when page loads
-
-    renderTasks();
+    // Initial display
+    displayTasks();
 
 });
