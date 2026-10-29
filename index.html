@@ -1,234 +1,284 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Payal Task Flow - a simple productivity and task management app.">
 
-    <title>Payal Task Flow | Smart Planner</title>
+    <title>Payal Task Flow</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
-          rel="stylesheet">
-
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark main-navbar">
+    <!-- Header -->
+    <header class="main-header" id="home">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="bi bi-check2-circle"></i> Payal Task Flow
-            </a>
+            <h1>Payal Task Flow</h1>
+            <p>A simple way to plan my day</p>
+        </div>
+    </header>
 
-            <button class="btn theme-btn" id="themeButton" type="button"
-                    aria-label="Switch color theme">
-                <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="#home">Task Flow</a>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navMenu"
+                aria-controls="navMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
             </button>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard">Dashboard</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#add-task">Add Task</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#my-tasks">My Tasks</a>
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
     </nav>
 
-    <main class="container py-4 py-md-5">
+    <!-- Introduction -->
+    <section class="intro-section">
+        <div class="container">
+            <div class="row align-items-center g-4">
 
-        <section class="hero-section mb-4">
-            <div class="hero-content">
-                <span class="welcome-tag">
-                    <i class="bi bi-stars"></i> YOUR PERSONAL PLANNER
-                </span>
+                <div class="col-md-7">
 
-                <h1>Make today <span>count.</span></h1>
+                    <h2>Plan your work, one task at a time.</h2>
 
-                <p>Organize your tasks, track your progress, and achieve more.</p>
+                    <p>
+                        College assignments, practical files and
+                        personal work can get difficult to manage.
+                        This small task planner helps me keep
+                        everything in one place.
+                    </p>
 
-                <div class="hero-date">
-                    <i class="bi bi-calendar3"></i>
-                    <span id="todayDate"></span>
+                    <a href="#add-task" class="btn btn-primary">
+                        Add a Task
+                    </a>
+
                 </div>
-            </div>
 
-            <div class="hero-icon">
-                <i class="bi bi-journal-check"></i>
-            </div>
-        </section>
+                <div class="col-md-5">
 
-        <section class="row g-3 mb-4">
-            <div class="col-6 col-lg-3">
-                <div class="stat-card stat-purple">
-                    <div class="stat-icon"><i class="bi bi-list-task"></i></div>
-                    <p>Total Tasks</p>
-                    <h2 id="totalCount">0</h2>
+                    <img
+                        src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80"
+                        class="intro-image"
+                        alt="Study desk with notebook and laptop">
+
                 </div>
-            </div>
 
-            <div class="col-6 col-lg-3">
-                <div class="stat-card stat-orange">
-                    <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
-                    <p>Pending</p>
-                    <h2 id="pendingCount">0</h2>
-                </div>
-            </div>
-
-            <div class="col-6 col-lg-3">
-                <div class="stat-card stat-green">
-                    <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
-                    <p>Completed</p>
-                    <h2 id="completedCount">0</h2>
-                </div>
-            </div>
-
-            <div class="col-6 col-lg-3">
-                <div class="stat-card stat-blue">
-                    <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
-                    <p>Progress</p>
-                    <h2 id="progressPercent">0%</h2>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel progress-panel mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div>
-                    <h5 class="mb-1">Your productivity</h5>
-                    <p class="muted-text mb-0">Every small step counts!</p>
-                </div>
-                <span class="progress-label" id="progressLabel">0% complete</span>
-            </div>
-
-            <div class="progress custom-progress">
-                <div id="progressBar" class="progress-bar"
-                     role="progressbar" style="width: 0%"
-                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                </div>
-            </div>
-        </section>
-
-        <div class="row g-4">
-            
-            <div class="col-lg-5">
-                <section class="panel add-panel h-100">
-                    <div class="section-heading">
-                        <div>
-                            <span class="eyebrow">GET STARTED</span>
-                            <h3 id="formHeading">Create a task</h3>
-                        </div>
-                        <div class="heading-icon">
-                            <i class="bi bi-pencil-square"></i>
-                        </div>
-                    </div>
-
-                    <form id="taskForm">
-                        <label for="taskInput" class="form-label">Task title *</label>
-                        <input type="text" id="taskInput" class="form-control"
-                               placeholder="What do you need to do?" maxlength="120" required>
-
-                        <label for="taskDescription" class="form-label mt-3">
-                            Description
-                        </label>
-                        <textarea id="taskDescription" class="form-control"
-                                  rows="3" maxlength="500"
-                                  placeholder="Add some details..."></textarea>
-
-                        <div class="row g-3 mt-1">
-                            <div class="col-sm-6">
-                                <label for="taskPriority" class="form-label">Priority</label>
-                                <select id="taskPriority" class="form-select">
-                                    <option value="Low">Low</option>
-                                    <option value="Medium" selected>Medium</option>
-                                    <option value="High">High</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <label for="taskDueDate" class="form-label">Due date</label>
-                                <input type="date" id="taskDueDate" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn primary-btn" id="submitButton">
-                                <i class="bi bi-plus-lg"></i> Add Task
-                            </button>
-
-                            <button type="button" class="btn cancel-btn d-none"
-                                    id="cancelEditButton">
-                                Cancel editing
-                            </button>
-                        </div>
-                    </form>
-                </section>
-            </div>
-            
-            <div class="col-lg-7">
-                <section class="panel tasks-panel h-100">
-                    <div class="section-heading">
-                        <div>
-                            <span class="eyebrow">YOUR WORKSPACE</span>
-                            <h3>My Tasks</h3>
-                        </div>
-                        <span class="task-counter" id="visibleCount">0 tasks</span>
-                    </div>
-
-                    <div class="search-box mb-3">
-                        <i class="bi bi-search"></i>
-                        <input type="search" id="searchInput"
-                               placeholder="Search your tasks..." aria-label="Search tasks">
-                    </div>
-
-                    <div class="row g-2 mb-3">
-                        <div class="col-sm-7">
-                            <select id="taskFilter" class="form-select"
-                                    aria-label="Filter tasks">
-                                <option value="All">All tasks</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                        </div>
-
-                        <div class="col-sm-5">
-                            <select id="priorityFilter" class="form-select"
-                                    aria-label="Filter by priority">
-                                <option value="All">All priorities</option>
-                                <option value="High">High priority</option>
-                                <option value="Medium">Medium priority</option>
-                                <option value="Low">Low priority</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="task-list" id="taskList"></div>
-
-                    <div class="empty-state" id="emptyMessage">
-                        <div class="empty-icon">
-                            <i class="bi bi-clipboard2-check"></i>
-                        </div>
-                        <h5>No tasks found</h5>
-                        <p>Add a task or change your search and filters.</p>
-                    </div>
-
-                    <div class="list-footer mt-3">
-                        <span class="muted-text">Your tasks are saved in this browser.</span>
-                        <button type="button" id="clearCompletedButton"
-                                class="btn btn-sm clear-btn">
-                            <i class="bi bi-trash3"></i> Clear completed
-                        </button>
-                    </div>
-                </section>
             </div>
         </div>
+    </section>
 
-        <footer class="text-center mt-5">
-            <p>Made with <span class="heart">♥</span> by Payal Makani</p>
-            <small>Plan smart. Stay focused. Keep growing.</small>
-        </footer>
-    </main>
+    <!-- Dashboard -->
+    <section id="dashboard" class="section-padding">
 
-    <div id="toastMessage" class="toast-message" role="status"
-         aria-live="polite"></div>
+        <div class="container">
 
+            <h2 class="section-title">My Dashboard</h2>
+
+            <div class="row g-3">
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="summary-card">
+                        <h5>Total Tasks</h5>
+                        <p id="totalTasks">0</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="summary-card">
+                        <h5>Pending</h5>
+                        <p id="pendingTasks">0</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="summary-card">
+                        <h5>Completed</h5>
+                        <p id="completedTasks">0</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Add Task -->
+    <section id="add-task" class="section-padding add-task-section">
+
+        <div class="container">
+
+            <h2 class="section-title">Add a New Task</h2>
+
+            <div class="task-form">
+
+                <form id="taskForm">
+
+                    <div class="mb-3">
+
+                        <label for="taskTitle" class="form-label">
+                            Task Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="taskTitle"
+                            class="form-control"
+                            placeholder="Example: Complete DS assignment"
+                            required>
+
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label for="taskDate" class="form-label">
+                                Due Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="taskDate"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="taskPriority" class="form-label">
+                                Priority
+                            </label>
+
+                            <select
+                                id="taskPriority"
+                                class="form-select">
+
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Add Task
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Task List -->
+    <section id="my-tasks" class="section-padding">
+
+        <div class="container">
+
+            <h2 class="section-title">My Tasks</h2>
+
+            <div class="task-controls mb-4">
+
+                <label for="taskFilter" class="form-label">
+                    Show Tasks
+                </label>
+
+                <select id="taskFilter" class="form-select">
+
+                    <option value="all">All Tasks</option>
+                    <option value="pending">Pending Tasks</option>
+                    <option value="completed">Completed Tasks</option>
+
+                </select>
+
+            </div>
+
+            <div id="taskList" class="row g-3">
+
+                <!-- Tasks are added here using JavaScript -->
+
+            </div>
+
+            <p id="emptyMessage" class="text-center mt-4">
+                No tasks yet. Add your first task above!
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container text-center">
+
+            <p>Payal Task Flow</p>
+
+            <p>BTech CSE - Data Science</p>
+
+            <p>
+                A small project made to manage everyday tasks.
+            </p>
+
+            <a href="#home">Back to top</a>
+
+        </div>
+
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <!-- Custom JavaScript -->
     <script src="script.js"></script>
+
 </body>
 </html>
