@@ -314,19 +314,68 @@ body {
     }
 
 }
-/* Updated background */
+/* New simple pastel gradient background */
+
 body {
     background: linear-gradient(
         135deg,
-        #fff8ed,
-        #e8f0df,
-        #f8e2d6
+        #fdf2f8,
+        #f3e8ff,
+        #e0f2fe
     ) !important;
+
     background-attachment: fixed !important;
 }
 
-/* Main sections */
-main,
-.container {
+/* Header */
+.main-header {
+    background: linear-gradient(
+        120deg,
+        #c084fc,
+        #f9a8d4
+    ) !important;
+}
+
+/* Intro section */
+.intro-section {
     background: transparent !important;
+}
+
+/* Dashboard */
+#dashboard {
+    background: transparent !important;
+}
+
+/* Add Task */
+.add-task-section {
+    background: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* My Tasks */
+#my-tasks {
+    background: transparent !important;
+}
+
+/* Navigation and footer */
+.navbar,
+.footer {
+    background-color: #6b5b95 !important;
+}
+
+/* Cards */
+.summary-card,
+.task-form,
+.task-card {
+    background-color: rgba(255, 255, 255, 0.88) !important;
+}
+
+/* Primary buttons */
+.btn-primary {
+    background-color: #8b5cf6 !important;
+    border-color: #8b5cf6 !important;
+}
+
+.btn-primary:hover {
+    background-color: #7c3aed !important;
+    border-color: #7c3aed !important;
 }
