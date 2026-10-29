@@ -314,3 +314,19 @@ body {
     }
 
 }
+/* Updated background */
+body {
+    background: linear-gradient(
+        135deg,
+        #fff8ed,
+        #e8f0df,
+        #f8e2d6
+    ) !important;
+    background-attachment: fixed !important;
+}
+
+/* Main sections */
+main,
+.container {
+    background: transparent !important;
+}
